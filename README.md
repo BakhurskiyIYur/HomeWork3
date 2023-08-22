@@ -12,7 +12,8 @@
 * создайте новый диск к ВМ размером 10GB
   > скрин: <img src="pic/6.JPG" align="center" />
 * добавьте свеже-созданный диск к виртуальной машине - надо зайти в режим ее редактирования и дальше выбрать пункт attach existing disk
-sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+  > скрин: <img src="pic/7.JPG" align="center" />
+  > скрин: <img src="pic/71.JPG" align="center" />
 * проинициализируйте диск согласно инструкции и подмонтировать файловую систему, только не забывайте менять имя диска на актуальное, в вашем случае это скорее всего будет /dev/sdb - https://www.digitalocean.com/community/tutorials/how-to-partition-and-format-storage-devices-in-linux
 sudo parted -l | grep Error
 sudo parted /dev/vdb mklabel gpt
@@ -20,6 +21,9 @@ mkpart primary ext4 0% 100%
 sudo mkfs -t ext4 /dev/vdb1
 sudo mkdir -p /mt/vdb1
 sudo mount -t auto /dev/vdb1 /mt/vdb1
+  > Открыл диск хранения, который собираюсь разделить. Затем указываю явно имя диска для разбиения. Создаю таблицу разделов gpt. Cкрин: <img src="pic/82.JPG" align="center" />
+  > Указываю явно имя диска для разбиения: <img src="pic/83.JPG" align="center" />
+  > скрин: <img src="pic/84.JPG" align="center" />
 * перезагрузите инстанс и убедитесь, что диск остается примонтированным (если не так смотрим в сторону fstab)
 /dev/vdb1 /mnt/vdb1 ext4 defaults 0 0  --добавить в файл /etc/fstab
 yc compute instance restart vm-ubuntu
